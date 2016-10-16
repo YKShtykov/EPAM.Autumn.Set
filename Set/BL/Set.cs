@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,8 @@ namespace BL
     /// Generic collection-set, elements must implement IEquatable interface
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    public class Set<T> where T: IEquatable<T>
+    public sealed class Set<T>: IEnumerable<T>
+        where T: IEquatable<T>
     {
         private T[] store;
         private int capacity;
@@ -108,6 +110,10 @@ namespace BL
             }
         }
 
+        /// <summary>
+        /// Remove element from set
+        /// </summary>
+        /// <param name="element"></param>
         public void Remove(T element)
         {
             for (int i = 0; i < currentPosition; i++)
@@ -145,11 +151,28 @@ namespace BL
             Array.Resize(ref store, capacity);
         }       
 
+        /// <summary>
+        /// It returns all elements like Ienumerable
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<T> GetElements()
         {
             var tmp = (T[])store.Clone();
             Array.Resize(ref tmp, currentPosition);
             return tmp.AsEnumerable();
+        }
+
+        public IEnumerator<T> GetEnumerator()
+        {
+            for (int i = 0; i < currentPosition; i++)
+            {
+                yield return store[i];
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

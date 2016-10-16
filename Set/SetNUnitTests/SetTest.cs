@@ -11,6 +11,9 @@ namespace SetNUnitTests
     [TestFixture]
     public class SetTest
     {
+        /// <summary>
+        /// Intersection test
+        /// </summary>
         [Test]
         public void IntersectionTest()
         {
@@ -30,6 +33,9 @@ namespace SetNUnitTests
             CollectionAssert.AreEqual(c.GetElements(),new int[] { 0, 1, 2, 3, 4 });
         }
 
+        /// <summary>
+        /// union test
+        /// </summary>
         [Test]
         public void UnionTest()
         {
@@ -42,6 +48,9 @@ namespace SetNUnitTests
             CollectionAssert.AreEqual(c.GetElements(), new int[] { 1,2,3,5 });
         }
 
+        /// <summary>
+        /// Expect test
+        /// </summary>
         [Test]
         public void ExpectTest()
         {
@@ -54,6 +63,9 @@ namespace SetNUnitTests
             CollectionAssert.AreEqual(c.GetElements(), new int[] { 1, 2 });
         }
 
+        /// <summary>
+        /// Symmetric difference test
+        /// </summary>
         [Test]
         public void SymmetricExpectTest()
         {
@@ -64,6 +76,23 @@ namespace SetNUnitTests
             Set<int> c = Set<int>.SymmetricExpect(a, b);
 
             CollectionAssert.AreEqual(c.GetElements(), new int[] { 1, 2,5 });
+        }
+
+        /// <summary>
+        /// Symmetric difference test
+        /// </summary>
+        [Test]
+        public void EnumeratorTest()
+        {
+            Set<int> a = new Set<int>();
+            Set<int> b = new Set<int>();
+            a.Add(new int[] { 1, 2, 3 });
+            foreach (var item in a)
+            {
+                b.Add(item * 2);
+            }
+
+            CollectionAssert.AreEqual(b.GetElements(), new int[] { 2,4,6 });
         }
     }
 }
